@@ -1,0 +1,30 @@
+version: "3.0"
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    env_file:
+      - mongo.env
+    volumes:
+      - './data:/data/db'
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    env_file:
+      - mongo-express.env
+  admin-server:
+    image: azizmavlyanov/admin-server
+    restart: on-failure
+    ports:
+    - 9003:9003
+  client-service:
+    image: azizmavlyanov/client-service
+    env_file:
+      - client-service.env
+    restart: on-failure
+    ports:
+    - 8080:8080
